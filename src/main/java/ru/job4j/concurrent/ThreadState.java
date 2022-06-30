@@ -32,7 +32,7 @@ public class ThreadState {
         System.out.println(first.getState() + " " + " first thread");
         System.out.println(second.getState() + " " + " second thread");
 
-        while (first.getState() != Thread.State.TERMINATED && second.getState() != Thread.State.TERMINATED) {
+        while (first.getState() != Thread.State.TERMINATED || second.getState() != Thread.State.TERMINATED) {
             System.out.println(first.getState() + " " + "first");
             System.out.println(first.getState() + " " + "second");
         }
