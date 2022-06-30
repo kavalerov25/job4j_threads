@@ -1,14 +1,15 @@
 package ru.job4j.concurrent;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.sleep;
 
 /**
  * Class ConsoleProgress - Прерывание потоков.
  * 1. Threads. 3. Прерывание нити[#283074].
  *
  * @author Kirill Kavalerov (kavalerov24@gmail.com)
- * @version 1.1
- * @since 30.06.2022
+ * @version 1.2
+ * @since 1.07.2022
  */
 public class ConsoleProgress implements Runnable {
     public static void main(String[] args) throws InterruptedException {
@@ -33,8 +34,13 @@ public class ConsoleProgress implements Runnable {
             try {
                 sleep(500);
             } catch (InterruptedException e) {
-                break;
+                /** NB:
+                 * В блоке catch нужно дополнительно вызывать прерывание нити для того, чтобы прерывания действительно произошло.
+                 * схема является шаблоном. Запомните, если используются методы sleep(), join() или wait(), то нужно в блоке catch вызвать прерывание.
+                 */
+                Thread.currentThread().interrupt();
             }
         }
     }
 }
+
