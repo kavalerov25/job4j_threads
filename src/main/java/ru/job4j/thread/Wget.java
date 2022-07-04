@@ -10,10 +10,12 @@ import java.net.URL;
  * 1. Threads. 4. Скачивание файла с ограничением. [#144271]
  *
  * @author Kirill Kavalerov (kavalerov24@gmail.com)
- * @version 1
- * @since 1.07.2022
+ * @version 2
+ * @since 4.07.2022
  */
 public class Wget implements Runnable {
+    private static final int DELAY_MS = 1000;
+    private static final int BUFFER_BYTE = 1024;
     private final String url;
     private final int speed;
     private final String file;
@@ -44,7 +46,7 @@ public class Wget implements Runnable {
     public void run() {
         try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
              FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte[] dataBuffer = new byte[1024];
+            byte[] dataBuffer = new byte[BUFFER_BYTE];
             int bytesRead;
             long start = System.currentTimeMillis();
             long interval;
@@ -54,10 +56,12 @@ public class Wget implements Runnable {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 if (totalBytes >= speed) {
                     interval = System.currentTimeMillis() - start;
-                    Thread.sleep(1000 - interval);
+                    if (interval < DELAY_MS)  {
+                        Thread.sleep(DELAY_MS - interval);
+                    }
+                    totalBytes = 0;
+                    start = System.currentTimeMillis();
                 }
-                totalBytes = 0;
-                start = System.currentTimeMillis();
             }
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().interrupt();
