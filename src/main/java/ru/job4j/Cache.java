@@ -16,7 +16,7 @@ public final class Cache {
      * @return cache
      * Поэтому, если вам просто нужно изменять одну переменную с помощью нескольких потоков, лучше выбирать атомарные классы.
      */
-    public static Cache instOf() {
+    public synchronized static Cache instOf() {
         if (cache == null) {
             cache = new Cache();
         }
