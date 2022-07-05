@@ -8,7 +8,10 @@ public final class DCLSingleton {
      * из потоков прочитает не полностью сконструированный объект
      */
 
-    private static  DCLSingleton inst;
+    private static volatile DCLSingleton inst;
+
+    private DCLSingleton() {
+    }
 
     public static DCLSingleton instOf() {
         if (inst == null) {
@@ -19,9 +22,6 @@ public final class DCLSingleton {
             }
         }
         return inst;
-    }
-
-    private DCLSingleton() {
     }
 
 }
