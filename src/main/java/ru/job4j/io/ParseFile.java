@@ -12,7 +12,7 @@ public final class ParseFile {
 
     public synchronized String content(Predicate<Character> filter) {
         StringBuilder output = new StringBuilder();
-        try (InputStream i = new FileInputStream(file)) {
+        try (InputStream i = new BufferedInputStream(new FileInputStream(file))) {
             int data;
             while ((data = i.read()) != -1) {
                 if (filter.test((char) data)) {
