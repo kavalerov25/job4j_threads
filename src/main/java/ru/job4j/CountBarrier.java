@@ -10,10 +10,9 @@ public class CountBarrier {
     }
 
     public synchronized void count() {
-        synchronized (monitor) {
             count++;
             monitor.notifyAll();
-        }
+
     }
 
     public synchronized void await() {
