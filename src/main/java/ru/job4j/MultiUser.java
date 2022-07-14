@@ -10,6 +10,7 @@ public class MultiUser {
                 },
                 "Master"
         );
+
         Thread slave = new Thread(
                 () -> {
                     barrier.check();
