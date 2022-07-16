@@ -9,12 +9,17 @@ import java.util.Queue;
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
+    private static final int DEFAULT_LIMIT = 10;
     private final int limit;
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
 
     public SimpleBlockingQueue(int limit) {
         this.limit = limit;
+    }
+
+    public SimpleBlockingQueue() {
+        this.limit = DEFAULT_LIMIT;
     }
 
     public synchronized void offer(T value) throws InterruptedException {
@@ -32,5 +37,9 @@ public class SimpleBlockingQueue<T> {
         T rsl = queue.poll();
         notifyAll();
         return rsl;
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
     }
 }
