@@ -9,7 +9,7 @@ import java.util.Queue;
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
-    private static final int DEFAULT_LIMIT = 10;
+    private static final int DEFAULT_LIMIT = Integer.MAX_VALUE;
     private final int limit;
     @GuardedBy("this")
     private Queue<T> queue = new LinkedList<>();
