@@ -15,27 +15,22 @@ public class CacheTest {
             assertThat(cache.get(1).getId(), is(1));
         }
 
-        @Test
-        public void whenUpdateTrue() {
-            Cache cache = new Cache();
-            Base base = new Base(1, 1);
-            Base baseTwo = new Base(1, 2);
-            cache.add(base);
-            baseTwo.setName("newName");
-            cache.update(base);
-            assertTrue(cache.update(baseTwo));
-            assertThat(cache.get(1).getVersion(), is(3));
-        }
+    @Test
+    public void whenUpdateThanTrue() {
+        Cache cache = new Cache();
+        Base model = new Base(1, 0);
+        cache.add(model);
+        assertTrue(cache.update(model));
+        assertThat(cache.get(model.getId()).getVersion(), is(1));
+    }
 
         @Test
-        public void whenUpdateTrueWithOutChanges() {
+        public void whenUpdateThanTru() {
             Cache cache = new Cache();
             Base base = new Base(1, 1);
             cache.add(base);
-            cache.update(base);
             assertTrue(cache.update(base));
-            assertTrue(cache.update(base));
-            assertThat(cache.get(1).getVersion(), is(4));
+            assertThat(cache.get(1).getVersion(), is(2));
         }
 
         @Test
