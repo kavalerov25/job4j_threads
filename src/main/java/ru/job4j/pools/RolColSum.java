@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 public class RolColSum {
     public static Sums[] sum(int[][] matrix) {
+
         Sums[] sums = init(matrix.length);
         for (int i = 0; i < matrix.length; i++) {
             sums[i] = getSum(matrix, i);
@@ -24,7 +25,7 @@ public class RolColSum {
         return CompletableFuture.supplyAsync(() -> getSum(matrix, index));
     }
 
-    public static Sums getSum(int[][] matrix, int index) {
+    private static Sums getSum(int[][] matrix, int index) {
         int rowSum = 0;
         int colSum = 0;
         for (int j = 0; j < matrix.length; j++) {
